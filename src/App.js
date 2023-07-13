@@ -15,8 +15,8 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <Players data={playersData} />
+    <div className="container">
+      {playersData.length > 0 && <Players data={playersData} />}
     </div>
   );
 }
