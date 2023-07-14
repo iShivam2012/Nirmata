@@ -2,7 +2,7 @@ import { useState } from "react";
 import Records from "./Records";
 import PageNavigation from "./PageNavigation";
 
-const Players = ({ data }) => {
+const Players = ({ data, playerDetailsHandler }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const playersData = data.map((pData) => {
     const age = new Date().getFullYear() - new Date(pData.dob).getFullYear();
@@ -34,7 +34,11 @@ const Players = ({ data }) => {
 
   return (
     <div>
-      <Records currentPage={currentPage} records={records} data={playersData} />
+      <Records
+        currentPage={currentPage}
+        records={records}
+        playerDetailsHandler={playerDetailsHandler}
+      />
       <PageNavigation
         numbers={numbers}
         onNextPageChangeHandler={onNextPageChangeHandler}

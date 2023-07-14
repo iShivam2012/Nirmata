@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-const Records = ({ data, records, currentPage }) => {
+const Records = ({ records, currentPage, playerDetailsHandler }) => {
   const [sortedRecords, setSortedRecords] = useState(records);
   const [order, setOrder] = useState("ASC");
   const sortHandler = (e) => {
@@ -45,6 +46,10 @@ const Records = ({ data, records, currentPage }) => {
     setSortedRecords(records);
   }, [currentPage]);
 
+  const onClickHandler = (name) => {
+    playerDetailsHandler(records, name);
+  };
+
   return (
     <table className="table">
       <thead>
@@ -62,7 +67,14 @@ const Records = ({ data, records, currentPage }) => {
         {sortedRecords.map((data) => {
           return (
             <tr key={data.id}>
-              <td>{data.name}</td>
+              <td>
+                <Link
+                  onClick={() => onClickHandler(data.name)}
+                  to="/playerDetails"
+                >
+                  {data.name}
+                </Link>
+              </td>
               <td>{data.description}</td>
               <td>{data.type}</td>
               <td>{data.points}</td>
