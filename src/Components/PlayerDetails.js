@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
 const PlayersDetails = ({ playerDetails, data }) => {
   const playerType = playerDetails[0].type;
   const similarTypePlayers = data.filter((playerData) => {
@@ -31,6 +33,9 @@ const PlayersDetails = ({ playerDetails, data }) => {
           </ul>
         );
       })}
+      <Link to="/cricketApp">
+        <button>Back</button>
+      </Link>
     </div>
   );
 };
