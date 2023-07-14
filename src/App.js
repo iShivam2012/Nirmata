@@ -21,7 +21,6 @@ function App() {
     const playerData = data.filter((pData) => {
       return pData.name === name;
     });
-    console.log(playerData);
     setPlayerDetails(playerData);
   };
   return (
@@ -40,7 +39,9 @@ function App() {
         </div>
       </Route>
       <Route path="/playerDetails" exact>
-        <PlayersDetails playerDetails={playerDetails} />
+        {playersData.length > 0 && (
+          <PlayersDetails playerDetails={playerDetails} data={playersData} />
+        )}
       </Route>
     </Switch>
   );
