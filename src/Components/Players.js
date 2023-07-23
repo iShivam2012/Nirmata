@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Records from "./Records";
 import PageNavigation from "./PageNavigation";
+import "./Styles/Players.css";
 
 const Players = ({ data, playerDetailsHandler }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +34,8 @@ const Players = ({ data, playerDetailsHandler }) => {
   };
 
   return (
-    <div>
+    <div className="players">
+      <h3 className="text-center display-4">Cricketers</h3>
       <Records
         currentPage={currentPage}
         records={records}

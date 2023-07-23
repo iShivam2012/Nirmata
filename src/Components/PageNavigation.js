@@ -1,3 +1,5 @@
+import "./Styles/Records.css";
+
 const PageNavigation = ({
   onPrevPageChangeHandler,
   onNextPageChangeHandler,
@@ -5,7 +7,7 @@ const PageNavigation = ({
   numbers,
 }) => {
   return (
-    <nav>
+    <nav className="flex paginationStyle">
       <ul className="pagination">
         <li className="page-item">
           <button className="page-link" onClick={onPrevPageChangeHandler}>

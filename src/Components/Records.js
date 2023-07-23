@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./Styles/Records.css";
 
 const Records = ({ records, currentPage, playerDetailsHandler }) => {
   const [sortedRecords, setSortedRecords] = useState(records);
   const [order, setOrder] = useState("ASC");
   const sortHandler = (e) => {
     const property = e.target.innerText;
-    if (property === "Name") {
+    if (property === "Name ") {
       if (order === "ASC") {
         const sd = [...records].sort((a, b) => (a.name > b.name ? 1 : -1));
         setSortedRecords(sd);
@@ -17,7 +18,7 @@ const Records = ({ records, currentPage, playerDetailsHandler }) => {
         setSortedRecords(sd);
         setOrder("ASC");
       }
-    } else if (property === "Rank") {
+    } else if (property === "Rank ") {
       if (order === "ASC") {
         const sd = [...records].sort((a, b) => (a.rank > b.rank ? 1 : -1));
         setSortedRecords(sd);
@@ -28,7 +29,7 @@ const Records = ({ records, currentPage, playerDetailsHandler }) => {
         setSortedRecords(sd);
         setOrder("ASC");
       }
-    } else if (property === "Age") {
+    } else if (property === "Age ") {
       if (order === "ASC") {
         const sd = [...records].sort((a, b) => (a.age > b.age ? 1 : -1));
         setSortedRecords(sd);
@@ -51,41 +52,64 @@ const Records = ({ records, currentPage, playerDetailsHandler }) => {
   };
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th onClick={sortHandler.bind("ASC")}>Name</th>
-          <th>Description</th>
-          <th>Type</th>
-          <th>Points</th>
-          <th onClick={sortHandler.bind("ASC")}>Rank</th>
-          <th>Date of Birth</th>
-          <th onClick={sortHandler.bind("ASC")}>Age</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Sort by</th>
+            <th onClick={sortHandler.bind("ASC")}>
+              Name <i className="fa fa-sort"></i>
+            </th>
+            <th onClick={sortHandler.bind("ASC")}>
+              Rank <i className="fa fa-sort"></i>
+            </th>
+            <th onClick={sortHandler.bind("ASC")}>
+              Age <i className="fa fa-sort"></i>
+            </th>
+          </tr>
+        </thead>
+      </table>
+      <div className="flex row ">
         {sortedRecords.map((data) => {
+          const PlayerType = {
+            bowler: "Bowler",
+            allRounder: "All Rounder",
+            batsman: "Batsman",
+            wicketKeeper: "Wicket Keeper",
+          };
           return (
-            <tr key={data.id}>
-              <td>
+            <div className="card col-sm-4" key={data.id}>
+              <div className="card-header text-center">
                 <Link
                   onClick={() => onClickHandler(data.name)}
                   to="/playerDetails"
                 >
                   {data.name}
                 </Link>
-              </td>
-              <td>{data.description}</td>
-              <td>{data.type}</td>
-              <td>{data.points}</td>
-              <td>{data.rank}</td>
-              <td>{data.dob}</td>
-              <td>{data.age}</td>
-            </tr>
+              </div>
+              <div className="card-body flex">
+                <div className="flex-column">
+                  <h6 className="card-title">Type</h6>
+                  <p className="card-text"> {PlayerType[data.type]} </p>
+                </div>
+                <div className="flex-column">
+                  <h6 className="card-title">Points</h6>
+                  <p className="card-text">{data.points}</p>
+                </div>
+                <div className="flex-column">
+                  <h6 className="card-title">Rank</h6>
+                  <p className="card-text">{data.rank}</p>
+                </div>
+                <div className="flex-column">
+                  <h6 className="card-title">Age</h6>
+                  <p className="card-text"> {data.age}</p>
+                </div>
+              </div>
+            </div>
           );
         })}
-      </tbody>
-    </table>
+      </div>
+    </div>
   );
 };
 

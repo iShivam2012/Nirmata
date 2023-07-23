@@ -7,12 +7,12 @@ import PlayersDetails from "./Components/PlayerDetails";
 
 function App() {
   const [playersData, setPlayersData] = useState([]);
-  const [playerDetails, setPlayerDetails] = useState([]);
 
   useEffect(() => {
     async function playersData() {
       const data = await getPlayers();
-      setPlayersData(data);
+      localStorage.setItem("playersData", JSON.stringify(data));
+      setPlayersData(JSON.parse(localStorage.getItem("playersData")));
     }
     playersData();
   }, []);
@@ -21,29 +21,39 @@ function App() {
     const playerData = data.filter((pData) => {
       return pData.name === name;
     });
-    setPlayerDetails(playerData);
+    localStorage.setItem("playerDetail", JSON.stringify(playerData));
   };
   return (
-    <Switch>
-      <Route path="/" exact>
-        <Redirect to="/cricketApp" />
-      </Route>
-      <Route path="/cricketApp">
+    <div className="App">
+      <div className="jumbotron header">
         <div className="container">
-          {playersData.length > 0 && (
-            <Players
-              data={playersData}
-              playerDetailsHandler={playerDetailsHandler}
-            />
-          )}
+          <h1 style={{ margin: "10px" }} className="display-4">
+            Cricket App
+          </h1>
+          <p className="lead">
+            This is a demo cricket Web App where you can see the player details
+          </p>
         </div>
-      </Route>
-      <Route path="/playerDetails" exact>
-        {playersData.length > 0 && (
-          <PlayersDetails playerDetails={playerDetails} data={playersData} />
-        )}
-      </Route>
-    </Switch>
+      </div>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/cricketApp" />
+        </Route>
+        <Route path="/cricketApp">
+          <div className="container">
+            {playersData.length > 0 && (
+              <Players
+                data={playersData}
+                playerDetailsHandler={playerDetailsHandler}
+              />
+            )}
+          </div>
+        </Route>
+        <Route path="/playerDetails" exact>
+          {playersData.length > 0 && <PlayersDetails data={playersData} />}
+        </Route>
+      </Switch>
+    </div>
   );
 }
 
